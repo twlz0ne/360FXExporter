@@ -2,7 +2,18 @@
 // Author: Paul Chan<paul@paulreina.com>
 //         http://www.chztv.com
 // Created on 13-09-04 AM1:19
-// Modified on 13-9-25 
+// Modified on 13-9-25
+
+// polyfill
+if (typeof jQuery.fn.live === 'undefined') {
+  jQuery.fn.extend({
+    live: function (event, callback) {
+      if (this.selector) {
+        jQuery(document).on(event, this.selector, callback);
+      }
+    }
+  });
+}
 
 var ARIA2 = (function() {
   var jsonrpc_version = '2.0';
@@ -47,7 +58,7 @@ $("head").append('<style>'
     +'#setting {cursor: pointer;}'
     +'</style>');
 
-$('.dl-aria2').live("click",function(){		    
+$(document).on('click', '.dl-aria2', function(){		    
     $('.aria2-content').toggle();
 } );
 
